@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class PlayerController 
 {
-    public event Action OnPlayerJumped;
-    public event Action OnPlayerWalked;
-    public event Action OnPlayerRun;
+    public event Action OnPlayerMoved;
 
     private StateMachine stateMachine;
+    private float lastSpawnXPosition;
+    private const float SpawnInterval = 1.5f;
+
     private Animator animator;
     private Rigidbody2D rigidbody;
     private Transform transform;
@@ -20,7 +21,15 @@ public class PlayerController
         this.transform = transform;
         
         stateMachine = new StateMachine();
-        stateMachine.ChangeState(new WalkingState(this));
+        
+        var standingState = new StandingState(this);
+        var walkingState = new WalkingState(this);
+        var runningState = new RunningState(this);
+        var jumpingState = new JumpingState(this);
+        
+        stateMachine.ChangeState(standingState);
+
+        lastSpawnXPosition = transform.position.x;
     }
     
 
@@ -34,12 +43,11 @@ public class PlayerController
     {
         stateMachine.Update();
 
-        if (stateMachine.currentState is JumpingState)
-            OnPlayerJumped?.Invoke();
-        else if (stateMachine.currentState is RunningState)
-            OnPlayerRun?.Invoke();
-        else if(stateMachine.currentState is WalkingState)
-            OnPlayerWalked?.Invoke();
+        if (Mathf.Abs(transform.position.x - lastSpawnXPosition) >= SpawnInterval)
+        {
+            OnPlayerMoved?.Invoke();
+            lastSpawnXPosition = transform.position.x;
+        }
     }
 
     public void ChangeState(IState newState)
@@ -47,18 +55,7 @@ public class PlayerController
         stateMachine.ChangeState(newState);
     }
 
-    public Animator Animator
-    {
-        get { return animator; }
-    }
-
-    public Rigidbody2D Rigidbody
-    {
-        get { return rigidbody; }
-    }
-
-    public Transform Transform
-    {
-        get { return transform; }
-    }
+    public Animator Animator => animator;
+    public Rigidbody2D Rigidbody => rigidbody;
+    public Transform Transform => transform;
 }
