@@ -1,23 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class LevelController 
+public class LevelController
 {
     private PlayerController playerController;
     private LevelGenerator levelGenerator;
 
-    public LevelController(PlayerController playerController, LevelGenerator levelGenerator)
+    public LevelController(PlayerController playerController, GameObject platformPrefab, Vector3 initialSpawnPoint)
     {
         this.playerController = playerController;
-        this.levelGenerator = levelGenerator;
+        this.levelGenerator = new LevelGenerator(initialSpawnPoint);
 
-        playerController.OnPlayerMoved += SpawnNextPlatform;
-    }
-
-    private void SpawnNextPlatform()
-    {
-        // Spawn the next platform at a suitable position ahead of the player
-        levelGenerator.SpawnPlatform();
+        playerController.OnPlayerMoved += () => levelGenerator.SpawnPlatform(platformPrefab);
     }
 }

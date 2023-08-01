@@ -1,6 +1,7 @@
+using UnityEngine;
 public class StateMachine
 {
-    private IState currentState {get; private set;}
+    public IState currentState {get; private set;}
 
     public void ChangeState(IState newState)
     {

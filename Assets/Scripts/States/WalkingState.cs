@@ -1,3 +1,4 @@
+using UnityEngine;
 public class WalkingState : IState
 {
     private readonly float speed = 5f;

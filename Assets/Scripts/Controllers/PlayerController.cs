@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class PlayerController
 
     private Animator animator;
     private Rigidbody2D rigidbody;
-    private Transform transform;
+    public Transform transform;
 
     public PlayerController(Animator animator, Rigidbody2D rigidbody, Transform transform){
 
@@ -39,7 +40,7 @@ public class PlayerController
     }
 
 
-    void Update()
+    public void Update()
     {
         stateMachine.Update();
 
