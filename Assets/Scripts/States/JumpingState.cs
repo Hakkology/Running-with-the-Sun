@@ -3,7 +3,7 @@ public class JumpingState : IState
 {
     
     private PlayerController playerController;
-    private float jumpForce = 5f;
+    private float jumpForce = 7.5f;
     private bool hasJumped = false;
 
     public JumpingState(PlayerController playerController)
@@ -13,15 +13,18 @@ public class JumpingState : IState
 
     public void Enter()
     {
-        Debug.Log("Enter Jumping State");
+
     }
 
     public void Execute()
     {
-        Debug.Log("Execute Jumping State");
+
         if(!hasJumped)
         {
-            playerController.Rigidbody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float adjustedHorizontalSpeed = Input.GetKey(KeyCode.LeftShift) ? 10f : 5f;
+
+            playerController.Rigidbody.AddForce(new Vector2(horizontalInput * adjustedHorizontalSpeed, jumpForce), ForceMode2D.Impulse);
             hasJumped = true;
         }
         
@@ -40,6 +43,6 @@ public class JumpingState : IState
 
     public void Exit()
     {
-        Debug.Log("Exit Jumping State");
+
     }
 }

@@ -11,12 +11,12 @@ public class WalkingState : IState
 
     public void Enter()
     {
-        Debug.Log("Enter Jumping State");
+
     }
 
     public void Execute()
     {
-        Debug.Log("Execute Walking State");
+
         float move = Input.GetKey(KeyCode.A) ? -1 : Input.GetKey(KeyCode.D) ? 1 : 0;
         playerController.transform.Translate(move * speed * Time.deltaTime, 0, 0);
 
@@ -33,6 +33,6 @@ public class WalkingState : IState
 
     public void Exit()
     {
-        Debug.Log("Exit Jumping State");
+
     }
 }

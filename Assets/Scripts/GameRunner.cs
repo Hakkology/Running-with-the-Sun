@@ -5,10 +5,16 @@ public class GameRunner : MonoBehaviour
     public GameObject platformPrefab; 
     public GameObject jumpPlatformPrefab;
     public GameObject blockPlatformPrefab;
+    public GameObject treePrefab; 
+    public GameObject background;
+    public Camera mainCamera;
     public Vector3 initialSpawnPoint;
+    float cameraOffset = 2f; 
 
     private PlayerController playerController;
     private LevelController levelController;
+    private CameraController cameraController;
+    private BackgroundController backgroundController;
 
     void Start()
     {
@@ -17,11 +23,16 @@ public class GameRunner : MonoBehaviour
         Transform transform = player.transform;
 
         playerController = new PlayerController(animator, rigidbody, transform);
-        levelController = new LevelController(playerController, platformPrefab, initialSpawnPoint);
+        levelController = new LevelController(playerController, platformPrefab, jumpPlatformPrefab, blockPlatformPrefab, treePrefab, initialSpawnPoint, mainCamera);
+
+        cameraController = new CameraController(transform, cameraOffset, mainCamera);
+        backgroundController =  new BackgroundController(mainCamera.transform, background.transform);
     }
     
     void Update()
     {
         playerController.Update();
+        cameraController.Update();
+        backgroundController.Update();
     }
 }

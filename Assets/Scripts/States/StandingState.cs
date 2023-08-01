@@ -10,12 +10,12 @@ public class StandingState : IState
 
     public void Enter()
     {
-        Debug.Log("Enter Standing State");
+
     }
 
     public void Execute()
     {
-        Debug.Log("Execute Standing State");
+
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
@@ -30,6 +30,6 @@ public class StandingState : IState
 
     public void Exit()
     {
-        Debug.Log("Exit Standing State");
+
     }
 }
